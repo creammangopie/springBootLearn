@@ -1,6 +1,6 @@
-package com.neb.springBoot;
+package com.neb.springboot;
 
-import com.neb.springBoot.controller.HellowWorldController;
+import com.neb.springboot.controller.HellowWorldController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
