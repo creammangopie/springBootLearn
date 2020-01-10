@@ -20,11 +20,11 @@ import javax.sql.DataSource;
  * ---------------------------------------------------------*
  * 2020/1/10       niueb           v1.0.0               创建
  */
-@Configuration
+//@Configuration
+//@ConfigurationProperties(prefix="spring.datasource")
 public class HikariAutoConfiguration {
 
-    @Bean(name = "dataSource")
-    @ConfigurationProperties("spring.datasource")
+    //@Bean(name = "dataSource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }

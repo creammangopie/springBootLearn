@@ -9,18 +9,39 @@ devtools:
 
 spring:
   datasource:
-    jdbc-url: jdbc:mysql://localhost:3310/springbootlearn?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
-    username: root
-    password: admin
+    druid:
+    url: jdbc:mysql://renniting-test-net.mysql.zhangbei.rds.aliyuncs.com:3306/cloud_park?useUnicode=true&characterEncoding=UTF-8
+    username: cloud_dev
+    password: cloud@123
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    minIdle: 5
+    maxActive: 200
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 3000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 'x'
+    testOnBorrow: true
+    testOnReturn: false
+    testOnWhileIdle: true
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 50
 
-#    #hikari数据库连接池
-    hikari:
-#      pool-name: Retail_HikariCP
-#      minimum-idle: 5 #最小空闲连接数量
-#      idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
-#      maximum-pool-size: 10 #连接池最大连接数，默认是10
-#      auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
-#      max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-#      connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
-#      connection-test-query: SELECT 1
-      driver-class-name: com.mysql.cj.jdbc.Driver
+
+#mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:mybatis/*mapper/**/*.xml
+  type-aliases-package: com.neb.springboot.model.*
+  global-config:
+    db-config:
+      logic-not-delete-value: 1
+      logic-delete-value: 0
+      id-type: auto
+      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #数据库大写下划线转换
+      db-type: mysql
