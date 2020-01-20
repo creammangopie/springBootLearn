@@ -1,8 +1,6 @@
 package com.neb.springboot;
 
 import com.alibaba.fastjson.JSONObject;
-import com.neb.springboot.dao.TsOrgDao;
-import com.neb.springboot.model.sys.TsOrg;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +22,7 @@ import java.util.List;
  */
 @SpringBootTest(classes = ApplicationStart.class)
 public class TsOrgTest {
-    @Autowired
+    /*@Autowired
     private TsOrgDao tsOrgDao;
 
 
@@ -38,5 +36,5 @@ public class TsOrgTest {
     public void selectTsOrgByParent(){
         List<TsOrg> list = tsOrgDao.selectTsOrgByParent(10001L);
         System.out.println(JSONObject.toJSON(list));
-    }
+    }*/
 }

@@ -1,6 +1,5 @@
 package com.neb.springboot;
 
-import com.neb.springboot.model.TsOp;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,11 +19,11 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest(classes = ApplicationStart.class)
 public class TsAreaDaoTest {
-    @Autowired
+    /*@Autowired
     private com.neb.springboot.mapper.TsOpMapper TsOpMapper;
     @Test
     public void test(){
         TsOp tsOp = TsOpMapper.selectById(10000);
         System.out.println(tsOp.toString());
-    }
+    }*/
 }

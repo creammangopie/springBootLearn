@@ -2,6 +2,7 @@ package com.neb.springboot.util;
 
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 生成mapper、entity
  * Copyright: Copyright (c) 2017  zteits
  *https://www.cnblogs.com/JzedyBlogs/p/10262278.html
  * @ClassName: Generator.java
@@ -28,22 +30,23 @@ import java.util.Map;
  * Date             Author          Version            Description
  * ---------------------------------------------------------*
  * 2019-05-30     wangfs              v1.0.0               创建
+ * 2020-01-14     niueb               v1.0.1               修改
  */
-public class Generator {
+public class GeneratorEntity {
     /**项目包名后缀*/
-    private static final String packageNameSuffix = ".sys";
+    private static final String packageNameSuffix = ".account";
     /**mapper文件生成包.*/
-    private static final String mapperPackageNameSuffix = "sys";
+    private static final String mapperPackageNameSuffix = "account";
     /**是否覆盖更新.*/
     private static final Boolean isFileOverride = true;
     /**注释作者*/
-    private static final String author = "wangfs";
+    private static final String author = "niueb";
 
-    /**如果不填会选择项目根路径*/
-    private static  String absolutePath ="/Users/wangfs/java_worksapce_bak/";
+    /**获取项目根路径*/
+    private static final String absolutePath = System.getProperty("user.dir");
 
     public static void main(String[] args) {
-        String[] tableNames = new String[]{"ts_org"};
+        String[] tableNames = new String[]{"user"};
         String[] modules = new String[]{"springBootLearn"};//项目模块名，需自定义
         for (String module : modules) {
             moduleGenerator(module, tableNames);
@@ -97,7 +100,8 @@ public class Generator {
                     if(absolutePath == "" || absolutePath == null ){
                         absolutePathInner =new File(module).getAbsolutePath();
                     }else{
-                        absolutePathInner=absolutePath+module;
+                        //absolutePathInner=absolutePath+module;多模块
+                        absolutePathInner=absolutePath;
                     }
                     return absolutePathInner+"/src/main/resources/mybatis/mapper/" + mapperPackageNameSuffix+"/" + tableInfo.getEntityName() + "Mapper.xml";
                 }
@@ -106,6 +110,11 @@ public class Generator {
         return cfg.setFileOutConfigList(focList);
     }
 
+    /**
+     * 模板配置
+     * @param module
+     * @return
+     */
     private static TemplateConfig getTemplateConfig(String module) {
         TemplateConfig templateConfig = new TemplateConfig();
         if ("springBootLearn".equals(module)) {
@@ -121,12 +130,17 @@ public class Generator {
         return templateConfig;
     }
 
+    /**
+     * 数据库表配置
+     * @param tableNames
+     * @return
+     */
     private static StrategyConfig getStrategyConfig(String[] tableNames) {
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
             .setCapitalMode(true)//驼峰命名
             .setEntityLombokModel(false)
-            .setRestControllerStyle(false)
+            .setRestControllerStyle(true)
             .setNaming(NamingStrategy.underline_to_camel)
             .setLogicDeleteFieldName("data_state")  //逻辑删除字段
             .setInclude(tableNames)
@@ -142,7 +156,7 @@ public class Generator {
             // 自定义 service 实现类父类
             // .setSuperServiceImplClass("com.baomidou.demo.TestServiceImpl")
             // 自定义 controller 父类  com.parkscloud.comm.base
-            .setSuperControllerClass("com.parkclouds.portal.common.BaseController")
+            //.setSuperControllerClass("com.parkclouds.portal.common.BaseController")
             // 【实体】是否生成字段常量（默认 false）
             // public static final String ID = "test_id";
             // .setEntityColumnConstant(true)BaseController.java
@@ -159,6 +173,11 @@ public class Generator {
         return strategyConfig;
     }
 
+    /**
+     * 包名配置
+     * @param module
+     * @return
+     */
     private static PackageConfig getPackageConfig(String module) {
         PackageConfig packageConfig = new PackageConfig();
         String packageName = "";//不同模块 代码生成具体路径自定义指定
@@ -166,35 +185,38 @@ public class Generator {
         if("springBootLearn".equals(module)){
             packageName =busiPackageName;
         }
-
         packageConfig.setParent(packageName)
-            .setEntity("model"+packageNameSuffix)
+            .setEntity("domain"+packageNameSuffix)
             .setMapper("mapper"+packageNameSuffix);
-        //.setService("service"+packageNameSuffix)
-        //.setServiceImpl("biz"+packageNameSuffix)
-        //.setController("web"+packageNameSuffix);
+            //.setService("service"+packageNameSuffix)
+            //.setServiceImpl("biz"+packageNameSuffix)
+            //.setController("web"+packageNameSuffix);
         return packageConfig;
     }
 
+    /**
+     * 数据源 dataSourceConfig 配置
+     * @return
+     */
     private static DataSourceConfig getDataSourceConfig() {
-        String dbUrl = "jdbc:mysql://renniting-test-net.mysql.zhangbei.rds.aliyuncs.com:3306/cloud_park?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true";
+        String dbUrl = "jdbc:mysql://localhost:3310/springbootlearn?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false";
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL)
-            .setDriverName(Driver.class.getName())
-            .setUsername("cloud_dev")
-            .setPassword("cloud@123")
+            .setDriverName("com.mysql.cj.jdbc.Driver")
+            .setUsername("root")
+            .setPassword("admin")
             .setUrl(dbUrl);
         return dataSourceConfig;
     }
 
+    /**
+     * 全局策略 globalConfig 配置
+     * @param module
+     * @return
+     */
     private static GlobalConfig getGlobalConfig(String module) {
         GlobalConfig globalConfig = new GlobalConfig();
-        String absolutePathInner ="";
-        if(absolutePath == "" || absolutePath == null ){
-            absolutePathInner =new File(module).getAbsolutePath();
-        }else{
-            absolutePathInner=absolutePath+module;
-        }
+        String absolutePathInner =absolutePath;
         globalConfig.setOpen(false)
             .setOutputDir(absolutePathInner + "/src/main/java")//生成文件的输出目录
             .setFileOverride(isFileOverride)                   // 是否覆盖文件
@@ -207,6 +229,9 @@ public class Generator {
             .setAuthor(author)
             .setMapperName("%sMapper")
             .setXmlName("%sMapper");
+            //.setServiceName("%sService")
+            //.setServiceImplName("%sServiceImpl")
+            //.setControllerName("%sController");
         return globalConfig;
     }
 

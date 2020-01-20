@@ -16,8 +16,9 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <mybatisplus.version>3.1.2</mybatisplus.version>
-        <mysql-version>5.1.10</mysql-version>
+        <mybatisplus.version>3.3.0</mybatisplus.version>
+<!--        <mysql-version>5.1.10</mysql-version>-->
+        <mysql-version>8.0.11</mysql-version>
     </properties>
 
     <dependencies>
@@ -45,7 +46,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.1.2</version>
+            <version>3.3.0</version>
         </dependency>
         <!--mybatis-plus-generator-->
         <dependency>

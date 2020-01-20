@@ -10,10 +10,10 @@ devtools:
 spring:
   datasource:
     druid:
-    url: jdbc:mysql://renniting-test-net.mysql.zhangbei.rds.aliyuncs.com:3306/cloud_park?useUnicode=true&characterEncoding=UTF-8
-    username: cloud_dev
-    password: cloud@123
-    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3310/springbootlearn?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     minIdle: 5
     maxActive: 200

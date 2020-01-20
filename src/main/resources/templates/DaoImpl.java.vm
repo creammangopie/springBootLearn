@@ -1,0 +1,26 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Component;
+
+/**
+ * <p>
+ * $!{table.comment} 数据实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Component
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+        }
+#else
+        public class ${table.serviceImplName}  implements ${table.serviceName} {
+
+        }
+#end
